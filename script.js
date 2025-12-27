@@ -1,12 +1,14 @@
-const words = [
-  { word: "corollary", note: "A result that follows directly from another." },
-  { word: "opaque", note: "Hard to see through or understand." },
-  { word: "regression", note: "A method to model relationships between variables." }
-];
-
+let words = [];
 let i = 0;
 
+async function loadWords() {
+  const res = await fetch("words.json");
+  words = await res.json();
+  render();
+}
+
 function render() {
+  if (words.length === 0) return;
   const w = words[i];
   document.getElementById("card").innerHTML =
     `<strong>${w.word}</strong><p>${w.note}</p>`;
@@ -17,4 +19,4 @@ function next() {
   render();
 }
 
-render();
+loadWords();
